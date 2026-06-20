@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>교직원 회의</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div id="clock" class="clock">00:00:00</div>
+            <div class="qr-section">
+                <p>출석 확인</p>
+                <img id="qr-image" src="" alt="QR Code" style="display: none;">
+            </div>
+        </header>
+
+        <main class="main-content">
+            <h1>교직원 회의</h1>
+            <div class="music-controls">
+                <button id="play-btn" class="btn">▶ 음악 재생</button>
+                <button id="pause-btn" class="btn">⏸ 음악 정지</button>
+            </div>
+            <div id="youtube-player" style="display:none;"></div>
+        </main>
+
+        <footer class="footer">
+            <h2>회의 순서</h2>
+            <ul id="agenda-list" class="agenda-list">
+                </ul>
+        </footer>
+    </div>
+
+    <button id="admin-btn" class="admin-btn">⚙️</button>
+    
+    <div id="admin-modal" class="modal">
+        <div class="modal-content">
+            <h3>관리자 설정</h3>
+            <label for="qr-upload">QR 코드 업로드 (이미지 파일):</label>
+            <input type="file" id="qr-upload" accept="image/*">
+            
+            <label for="agenda-input">회의 순서 입력 (쉼표로 구분):</label>
+            <input type="text" id="agenda-input" placeholder="예: 개회, 교장선생님 말씀, 안건 토의, 폐회">
+
+            <label for="youtube-id">YouTube 배경음악 ID (예: jfKfPfyJRdk):</label>
+            <input type="text" id="youtube-id" placeholder="YouTube 영상 ID">
+
+            <div class="modal-buttons">
+                <button id="save-admin" class="btn">저장</button>
+                <button id="close-admin" class="btn">닫기</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+</body>
+</html>
