@@ -6,7 +6,6 @@
     <title>교직원 회의 대시보드</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     <div class="dashboard" id="dashboard-bg">
@@ -42,24 +41,24 @@
             <div id="youtube-player"></div>
             <div class="music-controls">
                 <button id="music-toggle" class="music-btn">
-                    <i class="fa-solid fa-music"></i> <span id="music-status">Music ON</span>
+                    <span id="music-icon">🎵</span> <span id="music-status">Music ON</span>
                 </button>
             </div>
         </div>
 
         <div class="admin-trigger">
-            <button id="open-admin"><i class="fa-solid fa-gear"></i></button>
+            <button id="open-admin">⚙️ 설정</button>
         </div>
     </div>
 
     <div id="admin-modal" class="modal">
         <div class="modal-content">
-            <h2><i class="fa-solid fa-sliders"></i> 관리자 설정</h2>
+            <h2>🛠️ 관리자 설정</h2>
             
             <div class="input-group">
                 <label>배경화면 업로드 (따뜻한 그림 파일)</label>
                 <input type="file" id="admin-bg-upload" accept="image/*">
-                <small style="color: #888; font-size: 0.8rem; display: block; margin-top: 4px;">* 가급적 1MB 이하의 가벼운 이미지를 권장합니다.</small>
+                <small style="color: #888; font-size: 0.85rem; display: block; margin-top: 4px;">* 가급적 1MB 이하의 가벼운 이미지를 권장합니다.</small>
             </div>
             
             <div class="input-group">
