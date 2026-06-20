@@ -1,43 +1,49 @@
 :root {
     --primary-brown: #5d4037;
     --accent-orange: #d87d4a;
-    --bg-overlay: rgba(255, 253, 240, 0.6);
+    --bg-overlay: rgba(255, 254, 248, 0.65); /* 이미지 위를 덮는 따뜻한 불투명 레이어 */
     --soft-white: #fffdf9;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* 기본 초기화 및 전체 폰트 동글동글하게 적용 */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'NanumSquareRound', sans-serif !important;
+}
 
 body, html {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    font-family: 'Nanum Gothic', sans-serif;
+    background-color: #fdfaf4;
 }
 
-/* 배경: 동화책 느낌의 따뜻한 그림 (이미지 URL 교체) */
+/* 대시보드 기본 상자 */
 .dashboard {
     width: 100vw;
     height: 100vh;
-    background-image: linear-gradient(var(--bg-overlay), var(--bg-overlay)), 
-                      url('http://googleusercontent.com/image_collection/image_retrieval/18407587681376030800');
-    background-size: cover;
-    background-position: center;
     position: relative;
     padding: 40px;
     display: flex;
     flex-direction: column;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 0.5s ease-in-out;
 }
 
 /* 좌측 상단: 아날로그 시계 */
 .clock-area { position: absolute; top: 40px; left: 40px; }
 .analog-clock {
-    width: 180px;
-    height: 180px;
+    width: 190px;
+    height: 190px;
     border: 6px solid var(--primary-brown);
     border-radius: 50%;
     position: relative;
     background: white;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 25px rgba(93, 64, 55, 0.15);
 }
 .analog-clock .hand {
     position: absolute;
@@ -45,11 +51,11 @@ body, html {
     left: 50%;
     transform-origin: bottom;
     background: var(--primary-brown);
-    border-radius: 4px;
+    border-radius: 6px;
 }
-.hour { width: 6px; height: 50px; z-index: 3; }
-.minute { width: 4px; height: 75px; z-index: 2; }
-.second { width: 2px; height: 80px; background: var(--accent-orange); z-index: 4; }
+.hour { width: 6px; height: 55px; z-index: 3; }
+.minute { width: 4px; height: 78px; z-index: 2; }
+.second { width: 2px; height: 85px; background: var(--accent-orange); z-index: 4; }
 .center-dot {
     position: absolute;
     top: 50%; left: 50%;
@@ -59,111 +65,135 @@ body, html {
     transform: translate(-50%, -50%);
     z-index: 5;
 }
-.number { position: absolute; font-weight: bold; color: var(--primary-brown); font-size: 1.2rem; }
-.n12 { top: 10px; left: 50%; transform: translateX(-50%); }
-.n3 { right: 10px; top: 50%; transform: translateY(-50%); }
-.n6 { bottom: 10px; left: 50%; transform: translateX(-50%); }
-.n9 { left: 10px; top: 50%; transform: translateY(-50%); }
+.number { position: absolute; font-weight: 800; color: var(--primary-brown); font-size: 1.15rem; }
+.n12 { top: 12px; left: 50%; transform: translateX(-50%); }
+.n3 { right: 12px; top: 50%; transform: translateY(-50%); }
+.n6 { bottom: 12px; left: 50%; transform: translateX(-50%); }
+.n9 { left: 12px; top: 50%; transform: translateY(-50%); }
 
-/* 우측 상단: QR 영역 (확대됨) */
+/* 우측 상단: QR 영역 (선생님 요청 반영 대형화) */
 .qr-area { position: absolute; top: 40px; right: 40px; }
 .qr-container {
-    background: white;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    background: rgba(255, 255, 255, 0.9);
+    padding: 22px;
+    border-radius: 24px;
+    box-shadow: 0 12px 30px rgba(93, 64, 55, 0.12);
     text-align: center;
-    border: 1px solid #eee;
+    border: 2px solid #f3eade;
 }
 .qr-label {
-    font-family: 'Nanum Myeongjo', serif;
     font-weight: 800;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     color: var(--primary-brown);
-    margin-bottom: 15px;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
 }
 #qr-image {
-    width: 200px; /* 크기 증가 */
-    height: 200px;
+    width: 220px; /* 크기 재확장 */
+    height: 220px;
     object-fit: contain;
+    border-radius: 8px;
 }
 
-/* 중앙 메인 콘텐츠 */
+/* 중앙 메인 콘텐츠 (식순) */
 .main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 }
 #meeting-title {
-    font-family: 'Nanum Myeongjo', serif;
-    font-size: 4rem;
+    font-size: 4.5rem;
+    font-weight: 800;
     color: var(--primary-brown);
-    margin-bottom: 50px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 40px;
+    text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
+    letter-spacing: -1px;
 }
 .agenda-wrapper {
-    background: rgba(255, 255, 255, 0.7);
-    padding: 40px 60px;
-    border-radius: 30px;
-    min-width: 600px;
-    max-width: 800px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 45px 65px;
+    border-radius: 35px;
+    min-width: 650px;
+    max-width: 850px;
+    box-shadow: 0 20px 40px rgba(93, 64, 55, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.5);
 }
 #agenda-list {
     list-style: none;
-    font-size: 1.8rem;
-    color: #444;
+    font-size: 1.9rem;
+    color: #3e2723;
+    font-weight: 700;
 }
 #agenda-list li {
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px dashed #ccc;
+    margin-bottom: 22px;
+    padding-bottom: 12px;
+    border-bottom: 2px dashed #e0d4c3;
     display: flex;
     align-items: center;
 }
+#agenda-list li:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
 #agenda-list li::before {
-    content: "🌸";
-    margin-right: 15px;
-    font-size: 1.4rem;
+    content: "🐾"; /* 동화책 느낌의 아이콘 고정 */
+    margin-right: 18px;
+    font-size: 1.5rem;
 }
 
-/* 하단 뮤직 및 설정 버튼 */
+/* 우측 하단: 뮤직 제어 */
 .music-area { position: absolute; bottom: 40px; right: 40px; }
 .music-btn {
     background: var(--primary-brown);
     color: white;
     border: none;
-    padding: 15px 30px;
-    border-radius: 40px;
-    font-size: 1.1rem;
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    transition: 0.3s;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    transition: all 0.2s ease-in-out;
 }
-.music-btn:hover { background: var(--accent-orange); }
+.music-btn:hover { 
+    background: var(--accent-orange);
+    transform: scale(1.03);
+}
 
+/* 좌측 하단: 관리자 톱니바퀴 */
 .admin-trigger { position: absolute; bottom: 40px; left: 40px; }
 .admin-trigger button {
-    background: none; border: none; font-size: 1.5rem; color: var(--primary-brown);
-    cursor: pointer; opacity: 0.3;
+    background: none; border: none; font-size: 1.8rem; color: var(--primary-brown);
+    cursor: pointer; opacity: 0.25; transition: opacity 0.2s;
 }
 .admin-trigger button:hover { opacity: 1; }
 
-/* 모달 스타일 */
+/* 관리자 모달창 스타일 */
 .modal {
     display: none; position: fixed; top:0; left:0; width:100%; height:100%;
-    background: rgba(0,0,0,0.5); z-index: 100; justify-content: center; align-items: center;
+    background: rgba(93, 64, 55, 0.4); backdrop-filter: blur(4px);
+    z-index: 100; justify-content: center; align-items: center;
 }
 .modal-content {
-    background: white; padding: 40px; border-radius: 20px; width: 500px;
+    background: white; padding: 40px; border-radius: 30px; width: 520px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+    border: 3px solid #f3eade;
 }
-.input-group { margin-bottom: 15px; }
-.input-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+.modal-content h2 { color: var(--primary-brown); margin-bottom: 20px; font-weight: 800; }
+.input-group { margin-bottom: 18px; }
+.input-group label { display: block; margin-bottom: 6px; font-weight: 800; color: #4e342e; }
 .input-group input, .input-group textarea {
-    width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px;
+    width: 100%; padding: 12px; border: 2px solid #e0d4c3; border-radius: 12px; font-size: 1rem;
 }
-.modal-btns { display: flex; gap: 10px; margin-top: 20px; }
-.save-btn { flex: 1; background: var(--primary-brown); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; }
-.cancel-btn { flex: 1; background: #eee; border: none; padding: 12px; border-radius: 8px; cursor: pointer; }
+.input-group input:focus, .input-group textarea:focus {
+    outline: none; border-color: var(--accent-orange);
+}
+.modal-btns { display: flex; gap: 12px; margin-top: 25px; }
+.save-btn { flex: 1; background: var(--primary-brown); color: white; border: none; padding: 14px; border-radius: 12px; cursor: pointer; font-weight: 800; font-size: 1.1rem; }
+.save-btn:hover { background: #4e342e; }
+.cancel-btn { flex: 1; background: #eee; border: none; padding: 14px; border-radius: 12px; cursor: pointer; font-weight: 800; font-size: 1.1rem; color: #666; }
