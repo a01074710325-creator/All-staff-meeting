@@ -24,8 +24,8 @@
 
         <div class="qr-area">
             <div class="qr-container">
-                <p class="qr-label">출석 확인</p>
-                <img id="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Welcome" alt="Attendance QR">
+                <p class="qr-label">연수 등록부</p>
+                <img id="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Welcome" alt="QR Code">
             </div>
         </div>
 
@@ -58,7 +58,11 @@
             <div class="input-group">
                 <label>배경화면 업로드 (따뜻한 그림 파일)</label>
                 <input type="file" id="admin-bg-upload" accept="image/*">
-                <small style="color: #888; font-size: 0.85rem; display: block; margin-top: 4px;">* 가급적 1MB 이하의 가벼운 이미지를 권장합니다.</small>
+            </div>
+
+            <div class="input-group">
+                <label>연수 등록부 QR 업로드 (이미지 파일)</label>
+                <input type="file" id="admin-qr-upload" accept="image/*">
             </div>
             
             <div class="input-group">
@@ -67,18 +71,13 @@
             </div>
             
             <div class="input-group">
-                <label>회의 식순 (줄바꿈으로 구분)</label>
-                <textarea id="admin-agenda-input" rows="5" placeholder="예시:&#10;1. 개회 선언&#10;2. 학교장 인사말씀"></textarea>
+                <label>회의 순서 (줄바꿈으로 구분)</label>
+                <textarea id="admin-agenda-input" rows="4" placeholder="예시:&#10;1. 개회 선언&#10;2. 학교장 인사말씀"></textarea>
             </div>
             
             <div class="input-group">
-                <label>QR 이미지 URL</label>
-                <input type="text" id="admin-qr-input" placeholder="이미지 주소를 직접 입력할 경우 작성">
-            </div>
-            
-            <div class="input-group">
-                <label>유튜브 영상 ID (배경음악)</label>
-                <input type="text" id="admin-yt-input" placeholder="영상 URL 뒤의 ID (예: jfKfPfyJRdk)">
+                <label>유튜브 배경음악 링크</label>
+                <input type="text" id="admin-yt-input" placeholder="유튜브 영상 주소(URL) 전체를 복사해서 붙여넣으세요">
             </div>
             
             <div class="modal-btns">
