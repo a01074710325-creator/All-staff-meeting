@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>교직원 회의 대시보드</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700;800&family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <div class="dashboard">
+    <div class="dashboard" id="dashboard-bg">
         <div class="clock-area">
             <div class="analog-clock">
                 <div class="hand hour" id="hour-hand"></div>
@@ -39,7 +39,8 @@
         </div>
 
         <div class="music-area">
-            <div id="youtube-player"></div> <div class="music-controls">
+            <div id="youtube-player"></div>
+            <div class="music-controls">
                 <button id="music-toggle" class="music-btn">
                     <i class="fa-solid fa-music"></i> <span id="music-status">Music ON</span>
                 </button>
@@ -54,22 +55,33 @@
     <div id="admin-modal" class="modal">
         <div class="modal-content">
             <h2><i class="fa-solid fa-sliders"></i> 관리자 설정</h2>
+            
+            <div class="input-group">
+                <label>배경화면 업로드 (따뜻한 그림 파일)</label>
+                <input type="file" id="admin-bg-upload" accept="image/*">
+                <small style="color: #888; font-size: 0.8rem; display: block; margin-top: 4px;">* 정적 호스팅 특성상 고용량 이미지는 로딩이 느릴 수 있습니다.</small>
+            </div>
+            
             <div class="input-group">
                 <label>회의 제목</label>
                 <input type="text" id="admin-title-input" placeholder="회의 제목을 입력하세요">
             </div>
+            
             <div class="input-group">
                 <label>회의 식순 (줄바꿈으로 구분)</label>
-                <textarea id="admin-agenda-input" rows="6" placeholder="예시:&#10;1. 개회&#10;2. 교장선생님 말씀"></textarea>
+                <textarea id="admin-agenda-input" rows="5" placeholder="예시:&#10;1. 개회 선언&#10;2. 학교장 인사말씀"></textarea>
             </div>
+            
             <div class="input-group">
                 <label>QR 이미지 URL</label>
-                <input type="text" id="admin-qr-input" placeholder="이미지 주소를 입력하거나 QR 생성 URL 사용">
+                <input type="text" id="admin-qr-input" placeholder="이미지 주소를 직접 입력할 경우 작성">
             </div>
+            
             <div class="input-group">
                 <label>유튜브 영상 ID (배경음악)</label>
                 <input type="text" id="admin-yt-input" placeholder="영상 URL 뒤의 ID (예: jfKfPfyJRdk)">
             </div>
+            
             <div class="modal-btns">
                 <button id="save-admin" class="save-btn">저장하기</button>
                 <button id="close-admin" class="cancel-btn">닫기</button>
