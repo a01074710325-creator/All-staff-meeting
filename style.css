@@ -6,33 +6,19 @@
 }
 
 * { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
+    margin: 0; padding: 0; box-sizing: border-box; 
     font-family: 'NanumSquareRound', sans-serif !important;
 }
 
-body, html {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: #fdfaf4;
-}
+body, html { width: 100%; height: 100%; overflow: hidden; background-color: #fdfaf4; }
 
 .dashboard {
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    width: 100vw; height: 100vh; position: relative; padding: 40px;
+    display: flex; flex-direction: column; background-size: cover;
+    background-position: center; background-repeat: no-repeat;
     transition: background-image 0.5s ease-in-out;
 }
 
-/* z-index 고정 */
 .clock-area { position: absolute; top: 40px; left: 40px; z-index: 50; }
 .qr-area { position: absolute; top: 40px; right: 40px; z-index: 50; }
 .music-area { position: absolute; bottom: 40px; right: 40px; z-index: 50; }
@@ -61,15 +47,13 @@ body, html {
 .n9 { left: 12px; top: 50%; transform: translateY(-50%); }
 
 .qr-container {
-    background: rgba(255, 255, 255, 0.9); padding: 22px; border-radius: 24px;
+    background: rgba(255, 255, 255, 0.95); padding: 22px; border-radius: 24px;
     box-shadow: 0 12px 30px rgba(93, 64, 55, 0.12); text-align: center; border: 2px solid #f3eade;
 }
 .qr-label { font-weight: 800; font-size: 1.5rem; color: var(--primary-brown); margin-bottom: 12px; letter-spacing: -0.5px; }
 #qr-image { width: 220px; height: 220px; object-fit: contain; border-radius: 8px; }
 
-.main-content {
-    flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10;
-}
+.main-content { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10; }
 #meeting-title {
     font-size: 4.5rem; font-weight: 800; color: var(--primary-brown);
     margin-bottom: 40px; text-shadow: 2px 2px 0px rgba(255,255,255,0.8); letter-spacing: -1px;
@@ -84,7 +68,6 @@ body, html {
 #agenda-list li:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
 #agenda-list li::before { content: "🐾"; margin-right: 18px; font-size: 1.5rem; }
 
-/* 음악 버튼 디자인 수정 */
 .music-btn {
     background: var(--primary-brown); color: white; border: none; padding: 16px 32px;
     border-radius: 50px; font-size: 1.2rem; font-weight: 800; cursor: pointer;
@@ -93,7 +76,6 @@ body, html {
 }
 .music-btn:hover { background: var(--accent-orange); transform: scale(1.03); }
 
-/* 관리자 모드 버튼 디자인 수정 (명확한 텍스트 표출) */
 .admin-trigger { position: absolute; bottom: 40px; left: 40px; z-index: 100; }
 .admin-trigger button {
     background: rgba(255, 255, 255, 0.7); border: 2px solid var(--primary-brown);
@@ -109,17 +91,16 @@ body, html {
     z-index: 999; justify-content: center; align-items: center;
 }
 .modal-content {
-    background: white; padding: 40px; border-radius: 30px; width: 520px;
+    background: white; padding: 30px 40px; border-radius: 30px; width: 520px;
     box-shadow: 0 25px 50px rgba(0,0,0,0.2); border: 3px solid #f3eade;
 }
 .modal-content h2 { color: var(--primary-brown); margin-bottom: 20px; font-weight: 800; }
-.input-group { margin-bottom: 18px; }
+.input-group { margin-bottom: 15px; }
 .input-group label { display: block; margin-bottom: 6px; font-weight: 800; color: #4e342e; }
 .input-group input, .input-group textarea {
-    width: 100%; padding: 12px; border: 2px solid #e0d4c3; border-radius: 12px; font-size: 1rem;
+    width: 100%; padding: 10px; border: 2px solid #e0d4c3; border-radius: 12px; font-size: 1rem;
 }
 .input-group input:focus, .input-group textarea:focus { outline: none; border-color: var(--accent-orange); }
-.modal-btns { display: flex; gap: 12px; margin-top: 25px; }
+.modal-btns { display: flex; gap: 12px; margin-top: 20px; }
 .save-btn { flex: 1; background: var(--primary-brown); color: white; border: none; padding: 14px; border-radius: 12px; cursor: pointer; font-weight: 800; font-size: 1.1rem; }
-.save-btn:hover { background: #4e342e; }
 .cancel-btn { flex: 1; background: #eee; border: none; padding: 14px; border-radius: 12px; cursor: pointer; font-weight: 800; font-size: 1.1rem; color: #666; }
