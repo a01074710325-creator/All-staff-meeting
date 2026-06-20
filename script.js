@@ -1,4 +1,3 @@
-// DOM 로드 완료 후 안전하게 스크립트 실행
 document.addEventListener('DOMContentLoaded', () => {
     loadDashboardData();
     setupAdminEvents();
@@ -21,7 +20,7 @@ function updateClock() {
 }
 setInterval(updateClock, 1000);
 
-// 2. YouTube API (이 부분은 외부에서 접근 가능해야 하므로 전역 영역에 유지)
+// 2. YouTube API
 let player;
 function onYouTubeIframeAPIReady() {
     const savedYtId = localStorage.getItem('meetingYtId') || 'jfKfPfyJRdk';
@@ -36,6 +35,7 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
     const toggleBtn = document.getElementById('music-toggle');
     const statusText = document.getElementById('music-status');
+    const iconText = document.getElementById('music-icon');
     let isPlaying = false;
 
     if (toggleBtn) {
@@ -43,10 +43,12 @@ function onPlayerReady(event) {
             if (!isPlaying) {
                 player.playVideo();
                 statusText.textContent = "Music OFF";
+                iconText.textContent = "⏸️"; // 재생 중일 때 일시정지 아이콘으로 변경
                 toggleBtn.style.background = "#d87d4a";
             } else {
                 player.pauseVideo();
                 statusText.textContent = "Music ON";
+                iconText.textContent = "🎵"; // 정지 중일 때 음표 아이콘으로 변경
                 toggleBtn.style.background = "#5d4037";
             }
             isPlaying = !isPlaying;
@@ -73,7 +75,6 @@ function loadDashboardData() {
         }
     });
 
-    // 배경 이미지 로드
     const savedBg = localStorage.getItem('meetingBgImage');
     const dashboardEl = document.getElementById('dashboard-bg');
     if (savedBg) {
@@ -84,7 +85,7 @@ function loadDashboardData() {
     }
 }
 
-// 4. 관리자 모달 이벤트 바인딩 (수정된 핵심 로직)
+// 4. 관리자 모달 이벤트 바인딩
 function setupAdminEvents() {
     const adminModal = document.getElementById('admin-modal');
     const openAdminBtn = document.getElementById('open-admin');
@@ -92,7 +93,6 @@ function setupAdminEvents() {
     const saveAdminBtn = document.getElementById('save-admin');
     const bgUploadInput = document.getElementById('admin-bg-upload');
 
-    // 모달 열기
     if (openAdminBtn) {
         openAdminBtn.addEventListener('click', () => {
             document.getElementById('admin-title-input').value = localStorage.getItem('meetingTitle') || "교직원 회의";
@@ -103,14 +103,12 @@ function setupAdminEvents() {
         });
     }
 
-    // 모달 닫기
     if (closeAdminBtn) {
         closeAdminBtn.addEventListener('click', () => {
             adminModal.style.display = "none";
         });
     }
 
-    // 데이터 저장
     if (saveAdminBtn) {
         saveAdminBtn.addEventListener('click', () => {
             localStorage.setItem('meetingTitle', document.getElementById('admin-title-input').value);
