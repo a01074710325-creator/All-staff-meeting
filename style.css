@@ -1,11 +1,10 @@
 :root {
     --primary-brown: #5d4037;
     --accent-orange: #d87d4a;
-    --bg-overlay: rgba(255, 254, 248, 0.65); /* 이미지 위를 덮는 따뜻한 불투명 레이어 */
+    --bg-overlay: rgba(255, 254, 248, 0.65);
     --soft-white: #fffdf9;
 }
 
-/* 기본 초기화 및 전체 폰트 동글동글하게 적용 */
 * { 
     margin: 0; 
     padding: 0; 
@@ -20,7 +19,6 @@ body, html {
     background-color: #fdfaf4;
 }
 
-/* 대시보드 기본 상자 */
 .dashboard {
     width: 100vw;
     height: 100vh;
@@ -34,36 +32,27 @@ body, html {
     transition: background-image 0.5s ease-in-out;
 }
 
-/* 좌측 상단: 아날로그 시계 */
-.clock-area { position: absolute; top: 40px; left: 40px; }
+/* z-index 추가하여 상위 레이어로 고정 */
+.clock-area { position: absolute; top: 40px; left: 40px; z-index: 50; }
+.qr-area { position: absolute; top: 40px; right: 40px; z-index: 50; }
+.music-area { position: absolute; bottom: 40px; right: 40px; z-index: 50; }
+
 .analog-clock {
-    width: 190px;
-    height: 190px;
-    border: 6px solid var(--primary-brown);
-    border-radius: 50%;
-    position: relative;
-    background: white;
+    width: 190px; height: 190px; border: 6px solid var(--primary-brown);
+    border-radius: 50%; position: relative; background: white;
     box-shadow: 0 10px 25px rgba(93, 64, 55, 0.15);
 }
 .analog-clock .hand {
-    position: absolute;
-    bottom: 50%;
-    left: 50%;
-    transform-origin: bottom;
-    background: var(--primary-brown);
-    border-radius: 6px;
+    position: absolute; bottom: 50%; left: 50%; transform-origin: bottom;
+    background: var(--primary-brown); border-radius: 6px;
 }
 .hour { width: 6px; height: 55px; z-index: 3; }
 .minute { width: 4px; height: 78px; z-index: 2; }
 .second { width: 2px; height: 85px; background: var(--accent-orange); z-index: 4; }
 .center-dot {
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 12px; height: 12px;
-    background: var(--primary-brown);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 5;
+    position: absolute; top: 50%; left: 50%; width: 12px; height: 12px;
+    background: var(--primary-brown); border-radius: 50%;
+    transform: translate(-50%, -50%); z-index: 5;
 }
 .number { position: absolute; font-weight: 800; color: var(--primary-brown); font-size: 1.15rem; }
 .n12 { top: 12px; left: 50%; transform: translateX(-50%); }
@@ -71,118 +60,55 @@ body, html {
 .n6 { bottom: 12px; left: 50%; transform: translateX(-50%); }
 .n9 { left: 12px; top: 50%; transform: translateY(-50%); }
 
-/* 우측 상단: QR 영역 (선생님 요청 반영 대형화) */
-.qr-area { position: absolute; top: 40px; right: 40px; }
 .qr-container {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 22px;
-    border-radius: 24px;
-    box-shadow: 0 12px 30px rgba(93, 64, 55, 0.12);
-    text-align: center;
-    border: 2px solid #f3eade;
+    background: rgba(255, 255, 255, 0.9); padding: 22px; border-radius: 24px;
+    box-shadow: 0 12px 30px rgba(93, 64, 55, 0.12); text-align: center; border: 2px solid #f3eade;
 }
-.qr-label {
-    font-weight: 800;
-    font-size: 1.5rem;
-    color: var(--primary-brown);
-    margin-bottom: 12px;
-    letter-spacing: -0.5px;
-}
-#qr-image {
-    width: 220px; /* 크기 재확장 */
-    height: 220px;
-    object-fit: contain;
-    border-radius: 8px;
-}
+.qr-label { font-weight: 800; font-size: 1.5rem; color: var(--primary-brown); margin-bottom: 12px; letter-spacing: -0.5px; }
+#qr-image { width: 220px; height: 220px; object-fit: contain; border-radius: 8px; }
 
-/* 중앙 메인 콘텐츠 (식순) */
 .main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
+    flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10;
 }
 #meeting-title {
-    font-size: 4.5rem;
-    font-weight: 800;
-    color: var(--primary-brown);
-    margin-bottom: 40px;
-    text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
-    letter-spacing: -1px;
+    font-size: 4.5rem; font-weight: 800; color: var(--primary-brown);
+    margin-bottom: 40px; text-shadow: 2px 2px 0px rgba(255,255,255,0.8); letter-spacing: -1px;
 }
 .agenda-wrapper {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
-    padding: 45px 65px;
-    border-radius: 35px;
-    min-width: 650px;
-    max-width: 850px;
-    box-shadow: 0 20px 40px rgba(93, 64, 55, 0.08);
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px);
+    padding: 45px 65px; border-radius: 35px; min-width: 650px; max-width: 850px;
+    box-shadow: 0 20px 40px rgba(93, 64, 55, 0.08); border: 2px solid rgba(255, 255, 255, 0.5);
 }
-#agenda-list {
-    list-style: none;
-    font-size: 1.9rem;
-    color: #3e2723;
-    font-weight: 700;
-}
-#agenda-list li {
-    margin-bottom: 22px;
-    padding-bottom: 12px;
-    border-bottom: 2px dashed #e0d4c3;
-    display: flex;
-    align-items: center;
-}
-#agenda-list li:last-child {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    border-bottom: none;
-}
-#agenda-list li::before {
-    content: "🐾"; /* 동화책 느낌의 아이콘 고정 */
-    margin-right: 18px;
-    font-size: 1.5rem;
-}
+#agenda-list { list-style: none; font-size: 1.9rem; color: #3e2723; font-weight: 700; }
+#agenda-list li { margin-bottom: 22px; padding-bottom: 12px; border-bottom: 2px dashed #e0d4c3; display: flex; align-items: center; }
+#agenda-list li:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+#agenda-list li::before { content: "🐾"; margin-right: 18px; font-size: 1.5rem; }
 
-/* 우측 하단: 뮤직 제어 */
-.music-area { position: absolute; bottom: 40px; right: 40px; }
 .music-btn {
-    background: var(--primary-brown);
-    color: white;
-    border: none;
-    padding: 16px 32px;
-    border-radius: 50px;
-    font-size: 1.2rem;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-    transition: all 0.2s ease-in-out;
+    background: var(--primary-brown); color: white; border: none; padding: 16px 32px;
+    border-radius: 50px; font-size: 1.2rem; font-weight: 800; cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15); transition: all 0.2s ease-in-out;
 }
-.music-btn:hover { 
-    background: var(--accent-orange);
-    transform: scale(1.03);
-}
+.music-btn:hover { background: var(--accent-orange); transform: scale(1.03); }
 
-/* 좌측 하단: 관리자 톱니바퀴 */
-.admin-trigger { position: absolute; bottom: 40px; left: 40px; }
+/* 관리자 트리거 버튼 - 클릭 영역 최상단 배치 및 영역 확보 */
+.admin-trigger { position: absolute; bottom: 40px; left: 40px; z-index: 100; }
 .admin-trigger button {
-    background: none; border: none; font-size: 1.8rem; color: var(--primary-brown);
-    cursor: pointer; opacity: 0.25; transition: opacity 0.2s;
+    background: none; border: none; font-size: 2rem; color: var(--primary-brown);
+    cursor: pointer; opacity: 0.3; transition: opacity 0.2s; padding: 10px;
 }
 .admin-trigger button:hover { opacity: 1; }
+/* 버튼 안의 아이콘이 클릭 이벤트를 가로채는 것을 방지 */
+.admin-trigger button i { pointer-events: none; }
 
-/* 관리자 모달창 스타일 */
 .modal {
     display: none; position: fixed; top:0; left:0; width:100%; height:100%;
     background: rgba(93, 64, 55, 0.4); backdrop-filter: blur(4px);
-    z-index: 100; justify-content: center; align-items: center;
+    z-index: 999; justify-content: center; align-items: center;
 }
 .modal-content {
     background: white; padding: 40px; border-radius: 30px; width: 520px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-    border: 3px solid #f3eade;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.2); border: 3px solid #f3eade;
 }
 .modal-content h2 { color: var(--primary-brown); margin-bottom: 20px; font-weight: 800; }
 .input-group { margin-bottom: 18px; }
@@ -190,9 +116,7 @@ body, html {
 .input-group input, .input-group textarea {
     width: 100%; padding: 12px; border: 2px solid #e0d4c3; border-radius: 12px; font-size: 1rem;
 }
-.input-group input:focus, .input-group textarea:focus {
-    outline: none; border-color: var(--accent-orange);
-}
+.input-group input:focus, .input-group textarea:focus { outline: none; border-color: var(--accent-orange); }
 .modal-btns { display: flex; gap: 12px; margin-top: 25px; }
 .save-btn { flex: 1; background: var(--primary-brown); color: white; border: none; padding: 14px; border-radius: 12px; cursor: pointer; font-weight: 800; font-size: 1.1rem; }
 .save-btn:hover { background: #4e342e; }
