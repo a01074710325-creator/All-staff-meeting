@@ -3,57 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>교직원 회의</title>
+    <title>교직원 회의 대시보드</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@700;800&family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <div id="clock" class="clock">00:00:00</div>
-            <div class="qr-section">
-                <p>출석 확인</p>
-                <img id="qr-image" src="" alt="QR Code" style="display: none;">
+    <div class="dashboard">
+        <div class="clock-area">
+            <div class="analog-clock">
+                <div class="hand hour" id="hour-hand"></div>
+                <div class="hand minute" id="min-hand"></div>
+                <div class="hand second" id="sec-hand"></div>
+                <div class="center-dot"></div>
+                <div class="number n12">12</div>
+                <div class="number n3">3</div>
+                <div class="number n6">6</div>
+                <div class="number n9">9</div>
             </div>
-        </header>
+        </div>
 
-        <main class="main-content">
-            <h1>교직원 회의</h1>
-            <div class="music-controls">
-                <button id="play-btn" class="btn">▶ 음악 재생</button>
-                <button id="pause-btn" class="btn">⏸ 음악 정지</button>
+        <div class="qr-area">
+            <div class="qr-container">
+                <p class="qr-label">출석 확인</p>
+                <img id="qr-image" src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=Welcome" alt="Attendance QR">
             </div>
-            <div id="youtube-player" style="display:none;"></div>
-        </main>
+        </div>
 
-        <footer class="footer">
-            <h2>회의 순서</h2>
-            <ul id="agenda-list" class="agenda-list">
-                </ul>
-        </footer>
+        <div class="main-content">
+            <h1 id="meeting-title">교직원 회의</h1>
+            <div class="agenda-wrapper">
+                <ul id="agenda-list">
+                    </ul>
+            </div>
+        </div>
+
+        <div class="music-area">
+            <div id="youtube-player"></div> <div class="music-controls">
+                <button id="music-toggle" class="music-btn">
+                    <i class="fa-solid fa-music"></i> <span id="music-status">Music ON</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="admin-trigger">
+            <button id="open-admin"><i class="fa-solid fa-gear"></i></button>
+        </div>
     </div>
 
-    <button id="admin-btn" class="admin-btn">⚙️</button>
-    
     <div id="admin-modal" class="modal">
         <div class="modal-content">
-            <h3>관리자 설정</h3>
-            <label for="qr-upload">QR 코드 업로드 (이미지 파일):</label>
-            <input type="file" id="qr-upload" accept="image/*">
-            
-            <label for="agenda-input">회의 순서 입력 (쉼표로 구분):</label>
-            <input type="text" id="agenda-input" placeholder="예: 개회, 교장선생님 말씀, 안건 토의, 폐회">
-
-            <label for="youtube-id">YouTube 배경음악 ID (예: jfKfPfyJRdk):</label>
-            <input type="text" id="youtube-id" placeholder="YouTube 영상 ID">
-
-            <div class="modal-buttons">
-                <button id="save-admin" class="btn">저장</button>
-                <button id="close-admin" class="btn">닫기</button>
+            <h2><i class="fa-solid fa-sliders"></i> 관리자 설정</h2>
+            <div class="input-group">
+                <label>회의 제목</label>
+                <input type="text" id="admin-title-input" placeholder="회의 제목을 입력하세요">
+            </div>
+            <div class="input-group">
+                <label>회의 식순 (줄바꿈으로 구분)</label>
+                <textarea id="admin-agenda-input" rows="6" placeholder="예시:&#10;1. 개회&#10;2. 교장선생님 말씀"></textarea>
+            </div>
+            <div class="input-group">
+                <label>QR 이미지 URL</label>
+                <input type="text" id="admin-qr-input" placeholder="이미지 주소를 입력하거나 QR 생성 URL 사용">
+            </div>
+            <div class="input-group">
+                <label>유튜브 영상 ID (배경음악)</label>
+                <input type="text" id="admin-yt-input" placeholder="영상 URL 뒤의 ID (예: jfKfPfyJRdk)">
+            </div>
+            <div class="modal-btns">
+                <button id="save-admin" class="save-btn">저장하기</button>
+                <button id="close-admin" class="cancel-btn">닫기</button>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
     <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="script.js"></script>
 </body>
 </html>
