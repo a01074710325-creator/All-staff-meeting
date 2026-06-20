@@ -1,4 +1,10 @@
-// 1. 실시간 아날로그 시계 로직 (부드럽게 연동)
+// DOM 로드 완료 후 안전하게 스크립트 실행
+document.addEventListener('DOMContentLoaded', () => {
+    loadDashboardData();
+    setupAdminEvents();
+});
+
+// 1. 아날로그 시계 업데이트
 function updateClock() {
     const now = new Date();
     const sec = now.getSeconds();
@@ -14,12 +20,11 @@ function updateClock() {
     document.getElementById('hour-hand').style.transform = `translateX(-50%) rotate(${hourDeg}deg)`;
 }
 setInterval(updateClock, 1000);
-updateClock();
 
-// 2. YouTube IFrame API 배경음악 컨트롤러
+// 2. YouTube API (이 부분은 외부에서 접근 가능해야 하므로 전역 영역에 유지)
 let player;
 function onYouTubeIframeAPIReady() {
-    const savedYtId = localStorage.getItem('meetingYtId') || 'jfKfPfyJRdk'; // 기본값: Lofi Girl
+    const savedYtId = localStorage.getItem('meetingYtId') || 'jfKfPfyJRdk';
     player = new YT.Player('youtube-player', {
         height: '0', width: '0',
         videoId: savedYtId,
@@ -33,23 +38,24 @@ function onPlayerReady(event) {
     const statusText = document.getElementById('music-status');
     let isPlaying = false;
 
-    toggleBtn.addEventListener('click', () => {
-        if (!isPlaying) {
-            player.playVideo();
-            statusText.textContent = "Music OFF";
-            toggleBtn.style.background = "#d87d4a"; // 활성화 시 오렌지톤으로 변경
-        } else {
-            player.pauseVideo();
-            statusText.textContent = "Music ON";
-            toggleBtn.style.background = "#5d4037";
-        }
-        isPlaying = !isPlaying;
-    });
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            if (!isPlaying) {
+                player.playVideo();
+                statusText.textContent = "Music OFF";
+                toggleBtn.style.background = "#d87d4a";
+            } else {
+                player.pauseVideo();
+                statusText.textContent = "Music ON";
+                toggleBtn.style.background = "#5d4037";
+            }
+            isPlaying = !isPlaying;
+        });
+    }
 }
 
-// 3. 데이터 로드 및 UI 바인딩 (배경화면 처리 포함)
+// 3. 초기 화면 데이터 세팅 함수
 function loadDashboardData() {
-    // 회의 제목 및 QR 로드
     const title = localStorage.getItem('meetingTitle') || "교직원 회의";
     const agenda = localStorage.getItem('meetingAgenda') || "1. 개회 선언\n2. 학교장 인사말씀\n3. 부서별 공지사항\n4. 토의 및 협의\n5. 폐회";
     const qrUrl = localStorage.getItem('meetingQrUrl') || "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=WelcomeTeacher";
@@ -57,7 +63,6 @@ function loadDashboardData() {
     document.getElementById('meeting-title').textContent = title;
     document.getElementById('qr-image').src = qrUrl;
 
-    // 회의 식순 리스트 렌더링
     const list = document.getElementById('agenda-list');
     list.innerHTML = "";
     agenda.split('\n').forEach(item => {
@@ -68,66 +73,72 @@ function loadDashboardData() {
         }
     });
 
-    // 업로드된 배경화면 적용 로직
+    // 배경 이미지 로드
     const savedBg = localStorage.getItem('meetingBgImage');
     const dashboardEl = document.getElementById('dashboard-bg');
     if (savedBg) {
-        // 업로드된 커스텀 배경 적용
         dashboardEl.style.backgroundImage = `linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('${savedBg}')`;
     } else {
-        // 업로드 이미지 없을 때 기본으로 노출할 따뜻한 일러스트 테마
         const defaultBg = 'https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?q=80&w=1974&auto=format&fit=crop';
         dashboardEl.style.backgroundImage = `linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('${defaultBg}')`;
     }
 }
 
-// 4. 관리자 설정 모달 제어 및 파일 처리
-const adminModal = document.getElementById('admin-modal');
-const openAdminBtn = document.getElementById('open-admin');
-const closeAdminBtn = document.getElementById('close-admin');
-const saveAdminBtn = document.getElementById('save-admin');
-const bgUploadInput = document.getElementById('admin-bg-upload');
+// 4. 관리자 모달 이벤트 바인딩 (수정된 핵심 로직)
+function setupAdminEvents() {
+    const adminModal = document.getElementById('admin-modal');
+    const openAdminBtn = document.getElementById('open-admin');
+    const closeAdminBtn = document.getElementById('close-admin');
+    const saveAdminBtn = document.getElementById('save-admin');
+    const bgUploadInput = document.getElementById('admin-bg-upload');
 
-openAdminBtn.onclick = () => {
-    // 모달을 열 때 기존 저장 값 가져오기
-    document.getElementById('admin-title-input').value = localStorage.getItem('meetingTitle') || "교직원 회의";
-    document.getElementById('admin-agenda-input').value = localStorage.getItem('meetingAgenda') || "";
-    document.getElementById('admin-qr-input').value = localStorage.getItem('meetingQrUrl') || "";
-    document.getElementById('admin-yt-input').value = localStorage.getItem('meetingYtId') || "jfKfPfyJRdk";
-    adminModal.style.display = "flex";
-};
-
-closeAdminBtn.onclick = () => { adminModal.style.display = "none"; };
-
-// 저장하기 버튼 클릭 프로세스
-saveAdminBtn.onclick = () => {
-    localStorage.setItem('meetingTitle', document.getElementById('admin-title-input').value);
-    localStorage.setItem('meetingAgenda', document.getElementById('admin-agenda-input').value);
-    localStorage.setItem('meetingQrUrl', document.getElementById('admin-qr-input').value);
-    localStorage.setItem('meetingYtId', document.getElementById('admin-yt-input').value);
-
-    // 이미지 파일 업로드 여부 확인 후 Base64로 인코딩하여 저장
-    const file = bgUploadInput.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            try {
-                localStorage.setItem('meetingBgImage', e.target.result);
-                completeSave();
-            } catch (error) {
-                alert("이미지 용량이 너무 큽니다! 더 작은 크기(1MB 이하 추천)의 이미지를 선택해주세요.");
-            }
-        };
-        reader.readAsDataURL(file);
-    } else {
-        completeSave();
+    // 모달 열기
+    if (openAdminBtn) {
+        openAdminBtn.addEventListener('click', () => {
+            document.getElementById('admin-title-input').value = localStorage.getItem('meetingTitle') || "교직원 회의";
+            document.getElementById('admin-agenda-input').value = localStorage.getItem('meetingAgenda') || "";
+            document.getElementById('admin-qr-input').value = localStorage.getItem('meetingQrUrl') || "";
+            document.getElementById('admin-yt-input').value = localStorage.getItem('meetingYtId') || "jfKfPfyJRdk";
+            adminModal.style.display = "flex";
+        });
     }
-};
 
-function completeSave() {
-    alert("성공적으로 저장되었습니다! 대시보드를 새로고침합니다.");
-    location.reload();
+    // 모달 닫기
+    if (closeAdminBtn) {
+        closeAdminBtn.addEventListener('click', () => {
+            adminModal.style.display = "none";
+        });
+    }
+
+    // 데이터 저장
+    if (saveAdminBtn) {
+        saveAdminBtn.addEventListener('click', () => {
+            localStorage.setItem('meetingTitle', document.getElementById('admin-title-input').value);
+            localStorage.setItem('meetingAgenda', document.getElementById('admin-agenda-input').value);
+            localStorage.setItem('meetingQrUrl', document.getElementById('admin-qr-input').value);
+            localStorage.setItem('meetingYtId', document.getElementById('admin-yt-input').value);
+
+            const file = bgUploadInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    try {
+                        localStorage.setItem('meetingBgImage', e.target.result);
+                        executeSaveCompletion();
+                    } catch (error) {
+                        alert("⚠️ 이미지 용량이 너무 커서 저장에 실패했습니다.\n1MB 이하의 가벼운 이미지로 다시 시도해 주세요.");
+                    }
+                };
+                reader.readAsDataURL(file);
+            } else {
+                executeSaveCompletion();
+            }
+        });
+    }
 }
 
-// 초기화 구동
-window.onload = loadDashboardData;
+// 5. 저장 완료 시 화면 갱신
+function executeSaveCompletion() {
+    alert("✅ 성공적으로 저장되었습니다! 대시보드를 새로고침합니다.");
+    location.reload();
+}
